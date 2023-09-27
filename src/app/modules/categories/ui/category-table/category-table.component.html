@@ -1,0 +1,49 @@
+<p-confirmPopup />
+<p-table
+  [value]="categories"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [scrollable]="true"
+  scrollHeight="95vh"
+  [virtualScroll]="true"
+  [virtualScrollItemSize]="46"
+  [loading]="isLoading">
+  <ng-template pTemplate="header">
+    <tr>
+      <th i18n>Code</th>
+      <th class="w-8" i18n>Name</th>
+      <th i18n>Status</th>
+      <th i18n>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-category>
+    <tr>
+      <td>{{ category.id }}</td>
+      <td>{{ category.name }}</td>
+      <td>
+        <p-tag
+          *ngIf="category.active; else inactive"
+          severity="success"
+          value="Active"
+          i18n-value
+          data-test="tag-active" />
+        <ng-template #inactive>
+          <p-tag
+            severity="warning"
+            value="Inactive"
+            i18n-value
+            data-test="tag-inactive" />
+        </ng-template>
+      </td>
+      <td>
+        <p-button
+          icon="pi pi-pencil"
+          styleClass="p-button-rounded p-button-warning p-button-text"
+          (onClick)="editCategory.emit(category.id)" />
+        <p-button
+          icon="pi pi-trash"
+          styleClass="p-button-rounded p-button-danger p-button-text"
+          (onClick)="onConfirm($event, category.id)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

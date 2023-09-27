@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US">
+  <file id="ngi18n" original="ng.template">
+    <unit id="1806667489382256324">
+      <segment>
+        <source>Category</source>
+      </segment>
+    </unit>
+    <unit id="2159130950882492111">
+      <segment>
+        <source>Cancel</source>
+      </segment>
+    </unit>
+    <unit id="3193976279273491157">
+      <segment>
+        <source>Actions</source>
+      </segment>
+    </unit>
+    <unit id="3768927257183755959">
+      <segment>
+        <source>Save</source>
+      </segment>
+    </unit>
+    <unit id="4902817035128594900">
+      <segment>
+        <source>Description</source>
+      </segment>
+    </unit>
+    <unit id="5611592591303869712">
+      <segment>
+        <source>Status</source>
+      </segment>
+    </unit>
+    <unit id="6021402377416286149">
+      <segment>
+        <source>Category name</source>
+      </segment>
+    </unit>
+    <unit id="6739908750901392862">
+      <segment>
+        <source>Enter the new category name.</source>
+      </segment>
+    </unit>
+    <unit id="6988903159230918047">
+      <segment>
+        <source>Are you sure that you want to proceed?</source>
+      </segment>
+    </unit>
+    <unit id="8186013988289067040">
+      <segment>
+        <source>Code</source>
+      </segment>
+    </unit>
+    <unit id="8204176479746810612">
+      <segment>
+        <source>Active</source>
+      </segment>
+    </unit>
+    <unit id="8953033926734869941">
+      <segment>
+        <source>Name</source>
+      </segment>
+    </unit>
+    <unit id="1859131936150262113">
+      <segment>
+        <source>Inactive</source>
+      </segment>
+    </unit>
+  </file>
+</xliff>

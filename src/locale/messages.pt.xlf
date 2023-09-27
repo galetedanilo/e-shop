@@ -1,0 +1,82 @@
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US" trgLang="pt">
+  <file original="ng.template" id="ngi18n">
+    <unit id="1806667489382256324">
+      <segment state="initial">
+        <source>Category</source>
+        <target>Categoria</target>
+      </segment>
+    </unit>
+    <unit id="8204176479746810612">
+      <segment state="initial">
+        <source>Active</source>
+        <target>Ativo</target>
+      </segment>
+    </unit>
+    <unit id="6021402377416286149">
+      <segment state="initial">
+        <source>Category name</source>
+        <target>Nome da categoria</target>
+      </segment>
+    </unit>
+    <unit id="6739908750901392862">
+      <segment state="initial">
+        <source>Enter the new category name.</source>
+        <target>Digite o nome da nova categoria.</target>
+      </segment>
+    </unit>
+    <unit id="4902817035128594900">
+      <segment state="initial">
+        <source>Description</source>
+        <target>Descrição</target>
+      </segment>
+    </unit>
+    <unit id="3768927257183755959">
+      <segment state="initial">
+        <source>Save</source>
+        <target>Salvar</target>
+      </segment>
+    </unit>
+    <unit id="2159130950882492111">
+      <segment state="initial">
+        <source>Cancel</source>
+        <target>Cancelar</target>
+      </segment>
+    </unit>
+    <unit id="8186013988289067040">
+      <segment state="initial">
+        <source>Code</source>
+        <target>Código</target>
+      </segment>
+    </unit>
+    <unit id="8953033926734869941">
+      <segment state="initial">
+        <source>Name</source>
+        <target>Nome</target>
+      </segment>
+    </unit>
+    <unit id="5611592591303869712">
+      <segment state="initial">
+        <source>Status</source>
+        <target>Status</target>
+      </segment>
+    </unit>
+    <unit id="3193976279273491157">
+      <segment state="initial">
+        <source>Actions</source>
+        <target>Ações</target>
+      </segment>
+    </unit>
+    <unit id="6988903159230918047">
+      <segment state="initial">
+        <source>Are you sure that you want to proceed?</source>
+        <target>Você realmente deseja continuar com o procedimento?</target>
+      </segment>
+    </unit>
+    <unit id="1859131936150262113">
+      <segment state="initial">
+        <source>Inactive</source>
+        <target>Inativo</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>
