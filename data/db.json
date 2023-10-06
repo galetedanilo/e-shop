@@ -1,40 +1,31 @@
 {
   "categories": [
     {
+      "id": 1,
+      "isActive": true,
+      "name": "Carros",
+      "description": "Carros de varios tipos vendidos"
+    },
+    {
+      "id": 2,
+      "isActive": false,
+      "name": "Gravata",
+      "description": "Teste dois"
+    },
+    {
       "id": 3,
-      "active": true,
-      "name": "",
-      "description": "dfsdfd"
-    },
+      "isActive": true,
+      "name": "Car New ",
+      "description": "The new"
+    }
+  ],
+  "subcategories": [
     {
-      "id": 14,
-      "active": false,
-      "name": "fsf",
-      "description": "fdsfs"
-    },
-    {
-      "id": 15,
-      "active": false,
-      "name": "",
-      "description": "fdsf"
-    },
-    {
-      "id": 16,
-      "active": false,
-      "name": "",
-      "description": ""
-    },
-    {
-      "id": 17,
-      "active": false,
-      "name": "fds",
-      "description": "fdsf"
-    },
-    {
-      "id": 18,
-      "active": false,
-      "name": "danil",
-      "description": "fsdf"
+      "id": 1,
+      "isActive": true,
+      "name": "Carros",
+      "description": "Carros de varios tipos",
+      "categoryId": 1
     }
   ]
 }

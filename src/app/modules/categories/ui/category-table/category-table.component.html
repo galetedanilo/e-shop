@@ -21,7 +21,7 @@
       <td>{{ category.name }}</td>
       <td>
         <p-tag
-          *ngIf="category.active; else inactive"
+          *ngIf="category.isActive; else inactive"
           severity="success"
           value="Active"
           i18n-value

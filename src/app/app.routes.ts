@@ -9,4 +9,12 @@ export const routes: Routes = [
         r => r.CATEGORIES_ROUTES
       ),
   },
+  {
+    path: 'subcategories',
+    title: 'E-Shop - Subcategoreis',
+    loadChildren: () =>
+      import('./modules/subcategories/subcategories.routes').then(
+        r => r.SUBCATEGORIES_ROUTES
+      ),
+  },
 ];

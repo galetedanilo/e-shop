@@ -10,7 +10,7 @@ import {
   of,
   tap,
 } from 'rxjs';
-import { EApiCode, EApiMessage } from '../enums/api-error.enum';
+import { ApiCode, ApiMessage } from '../enums/api-error.enum';
 import { MessageService } from 'primeng/api';
 import { ICategoriesService } from '../services/categories.service.interface';
 
@@ -38,8 +38,8 @@ export class CategoriesEffect {
             of(
               CategoriesActions.loadCategoriesFailure({
                 error: {
-                  code: EApiCode.FAILURE_LOAD,
-                  message: EApiMessage.FAILURE_LOAD,
+                  code: ApiCode.FAILURE_LOAD,
+                  message: ApiMessage.FAILURE_LOAD,
                 },
               })
             )
@@ -72,8 +72,8 @@ export class CategoriesEffect {
             return of(
               CategoriesActions.createCategoryFailure({
                 error: {
-                  code: EApiCode.FAILURE_CREATE,
-                  message: EApiMessage.FAILURE_UPDATE,
+                  code: ApiCode.FAILURE_CREATE,
+                  message: ApiMessage.FAILURE_UPDATE,
                 },
               })
             );
@@ -95,7 +95,7 @@ export class CategoriesEffect {
               'Update category successfully'
             );
             return CategoriesActions.updateCategorySuccess({
-              category: { id: category.id as number, changes: category },
+              category: { id: category.id as string, changes: category },
             });
           }),
           catchError(() => {
@@ -104,8 +104,8 @@ export class CategoriesEffect {
             return of(
               CategoriesActions.updateCategoryFailure({
                 error: {
-                  code: EApiCode.FAILURE_UPDATE,
-                  message: EApiMessage.FAILURE_UPDATE,
+                  code: ApiCode.FAILURE_UPDATE,
+                  message: ApiMessage.FAILURE_UPDATE,
                 },
               })
             );
@@ -136,8 +136,8 @@ export class CategoriesEffect {
         return of(
           CategoriesActions.deleteCategoryFailure({
             error: {
-              code: EApiCode.FAILURE_DELETE,
-              message: EApiMessage.FAILURE_DELETE,
+              code: ApiCode.FAILURE_DELETE,
+              message: ApiMessage.FAILURE_DELETE,
             },
           })
         );

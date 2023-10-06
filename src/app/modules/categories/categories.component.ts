@@ -4,10 +4,9 @@ import { CategoryFormComponent } from './ui/category-form/category-form.componen
 import { CategoryTableComponent } from './ui/category-table/category-table.component';
 
 import { ToastModule } from 'primeng/toast';
-import { CategoriesActions } from './states/categories.actions';
 import { Store } from '@ngrx/store';
-import { ICategory } from './models/category.model';
-import { CategoriesFeature } from './states/categories.feature';
+import { CategoriesActions, CategoriesFeature } from './states';
+import { ICategory } from './models';
 
 @Component({
   selector: 'app-categories',
@@ -51,11 +50,11 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
-  editCategory(id: number) {
+  editCategory(id: string) {
     this.#store.dispatch(CategoriesActions.setSelectedCategory({ id }));
   }
 
-  deleteCategory(id: number) {
+  deleteCategory(id: string) {
     this.#store.dispatch(CategoriesActions.deleteCategory({ id }));
   }
 

@@ -1,44 +1,45 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
-import { CategoryState } from '../interfaces/category.state';
-import { CategoriesActions } from './categories.actions';
 import { createEntityAdapter } from '@ngrx/entity';
-import { ICategory } from '../models/category.model';
+import { ICategoryState } from '../interfaces';
+import { ICategory } from '../models';
+import { CategoriesActions } from './categories.actions';
+
 
 const adapter = createEntityAdapter<ICategory>();
 
-const initialState: CategoryState = adapter.getInitialState({
+const initialState: ICategoryState = adapter.getInitialState({
   isFormLoading: false,
   isLoading: false,
-  selectedCategoryId: null,
+  selectedId: null,
   error: null,
 });
 
 const initialFormState: ICategory = {
   id: null,
-  active: false,
+  isActive: false,
   name: '',
   description: '',
 };
 
-const reducer = createReducer<CategoryState>(
+const reducer = createReducer<ICategoryState>(
   initialState,
   on(
     CategoriesActions.enterPage,
     CategoriesActions.loadCategories,
-    (state): CategoryState => ({
+    (state): ICategoryState => ({
       ...state,
       isLoading: true,
     })
   ),
   on(
     CategoriesActions.loadCategoriesSuccess,
-    (state, action): CategoryState => {
+    (state, action): ICategoryState => {
       return adapter.addMany(action.categories, { ...state, isLoading: false });
     }
   ),
   on(
     CategoriesActions.loadCategoriesFailure,
-    (state, action): CategoryState => ({
+    (state, action): ICategoryState => ({
       ...state,
       error: action.error,
       isLoading: false,
@@ -46,66 +47,74 @@ const reducer = createReducer<CategoryState>(
   ),
   on(
     CategoriesActions.createCategory,
-    CategoriesActions.updateCategory,
-    (state): CategoryState => ({
+    (state): ICategoryState => ({
       ...state,
       isFormLoading: true,
     })
   ),
   on(
     CategoriesActions.createCategorySuccess,
-    (state, action): CategoryState => {
+    (state, action): ICategoryState => {
       return adapter.addOne(action.category, {
         ...state,
         isFormLoading: false,
       });
     }
   ),
+  on(CategoriesActions.updateCategory, (state, action): ICategoryState => {
+    return adapter.updateOne(
+      { id: action.category.id as string, changes: action.category },
+      {
+        ...state,
+        isFormLoading: true,
+      }
+    );
+  }),
   on(
     CategoriesActions.updateCategorySuccess,
-    (state, action): CategoryState => {
+    (state, action): ICategoryState => {
       return adapter.updateOne(action.category, {
         ...state,
         isFormLoading: false,
-        selectedCategoryId: null,
+        selectedId: null,
       });
     }
   ),
   on(
     CategoriesActions.createCategoryFailure,
     CategoriesActions.updateCategoryFailure,
-    (state, action): CategoryState => ({
+    (state, action): ICategoryState => ({
       ...state,
       isFormLoading: false,
-      selectedCategoryId: null,
+      selectedId: null,
       error: action.error,
     })
   ),
   on(
     CategoriesActions.deleteCategorySuccess,
-    (state, action): CategoryState => {
+    (state, action): ICategoryState => {
       return adapter.removeOne(action.id, state);
     }
   ),
   on(
     CategoriesActions.deleteCategoryFailure,
-    (state, action): CategoryState => ({
+    (state, action): ICategoryState => ({
       ...state,
       error: action.error,
     })
   ),
   on(
     CategoriesActions.setSelectedCategory,
-    (state, action): CategoryState => ({
+    (state, action): ICategoryState => ({
       ...state,
-      selectedCategoryId: action.id,
+      selectedId: action.id,
     })
   ),
   on(
     CategoriesActions.clearSelectedCategory,
-    (state): CategoryState => ({
+    (state): ICategoryState => ({
       ...state,
-      selectedCategoryId: null,
+      selectedId: null,
     })
   )
 );
@@ -115,12 +124,12 @@ export const CategoriesFeature = createFeature({
   reducer,
   extraSelectors: ({
     selectCategoriesFeatureState,
-    selectSelectedCategoryId,
+    selectSelectedId,
     selectEntities,
   }) => ({
     ...adapter.getSelectors(selectCategoriesFeatureState),
     selectSelectedCategory: createSelector(
-      selectSelectedCategoryId,
+      selectSelectedId,
       selectEntities,
       (selectedId, entities) =>
         selectedId ? entities[selectedId] : initialFormState

@@ -1,11 +1,9 @@
 import { Routes } from '@angular/router';
-import { ICategoriesService } from './services/categories.service.interface';
-import { CategoriesService } from './services/categories.service';
 import { provideState } from '@ngrx/store';
-import { CategoriesFeature } from './states/categories.feature';
 import { provideEffects } from '@ngrx/effects';
-import { CategoriesEffect } from './states/categories.effects';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ICategoriesService, CategoriesService } from './services';
+import { CategoriesFeature, CategoriesEffect } from './states';
 
 export const CATEGORIES_ROUTES: Routes = [
   {

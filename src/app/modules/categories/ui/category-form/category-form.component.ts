@@ -7,7 +7,6 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
-  effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -24,8 +23,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { ICategory } from '../../models/category.model';
-import { ErrorFieldComponent } from 'src/app/shared/components/error-field/error-field.component';
-import { FormMessagesHelper } from '../../helpers/error-message.helper';
 
 @Component({
   selector: 'app-category-form',
@@ -38,7 +35,6 @@ import { FormMessagesHelper } from '../../helpers/error-message.helper';
     InputTextModule,
     InputTextareaModule,
     InputSwitchModule,
-    ErrorFieldComponent,
   ],
   templateUrl: './category-form.component.html',
   styleUrls: ['./category-form.component.css'],
@@ -55,21 +51,20 @@ export class CategoryFormComponent implements OnInit, OnChanges {
   #initialFormValue: unknown;
 
   form = new FormGroup({
-    id: new FormControl(0),
-    active: new FormControl(true),
-    name: new FormControl('', [Validators.required, Validators.maxLength(5)]),
+    id: new FormControl(''),
+    isActive: new FormControl(true),
+    name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
     description: new FormControl('', [
       Validators.required,
       Validators.maxLength(1000),
     ]),
   });
 
-  messages = FormMessagesHelper;
-
   ngOnInit(): void {
     this.#initialFormValue = this.form.value;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ngOnChanges(_changes: SimpleChanges): void {
     this.form.setValue(this.formValue);
   }

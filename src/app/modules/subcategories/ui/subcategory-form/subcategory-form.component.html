@@ -7,7 +7,8 @@
           formControlName="isActive"></p-inputSwitch>
         <label for="isActive" i18n>Active</label>
       </div>
-      <div class="flex flex-column gap-2 w-full">
+      <div
+        class="flex flex-column sm:flex-row gap-4 sm:gap-2 justify-content-between w-full">
         <div class="flex w-full">
           <span class="p-input-icon-right p-float-label w-full">
             <i class="bx bxs-category"></i>
@@ -24,8 +25,37 @@
             <label htmlFor="category" i18n>Category</label>
           </span>
         </div>
-        <small id="category" i18n>Enter the new category name.</small>
+        <small *ngIf="form.controls['name'].valid" id="category" i18n
+          >Enter the new category name.</small
+        >
+
+        <span class="p-float-label">
+          <p-dropdown
+            [options]="categories"
+            formControlName="category"
+            optionLabel="name"
+            [filter]="true"
+            filterBy="name"
+            [showClear]="true"
+            placeholder="Select a Category"
+            inputId="category-label">
+            <ng-template pTemplate="selectedItem">
+              <div
+                class="flex align-items-center gap-2"
+                *ngIf="form.controls['category'].valid">
+                <div>{{ form.controls['category'].value }}</div>
+              </div>
+            </ng-template>
+            <ng-template class="w-full" let-category pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                <div>{{ category.name }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <label htmlFor="category-label">Select a Category</label>
+        </span>
       </div>
+
       <div class="w-full pt-4">
         <span class="p-float-label">
           <textarea

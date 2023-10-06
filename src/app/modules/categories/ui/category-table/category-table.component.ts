@@ -25,12 +25,12 @@ import { ConfirmationService } from 'primeng/api';
 export class CategoryTableComponent {
   @Input() categories!: ICategory[];
   @Input() isLoading!: boolean;
-  @Output() editCategory = new EventEmitter<number>();
-  @Output() deleteCategory = new EventEmitter<number>();
+  @Output() editCategory = new EventEmitter<string>();
+  @Output() deleteCategory = new EventEmitter<string>();
 
   #service = inject(ConfirmationService);
 
-  onConfirm(event: Event, id: number) {
+  onConfirm(event: Event, id: string) {
     this.#service.confirm({
       target: event.target as EventTarget,
       message: $localize`Are you sure that you want to proceed?`,

@@ -1,8 +1,9 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { ICategory } from '../models/category.model';
-import { IApiError } from '../interfaces/api-error.interface';
+import { IApiError } from '../../../shared/interfaces/api-error.interface';
 import { Update } from '@ngrx/entity';
-import { IMessages } from '../interfaces/messages.interface';
+import { IMessages } from 'src/app/shared/interfaces/messages.interface';
+import { ApiCode, ApiMessage } from '../enums/api-error.enum';
 
 export const CategoriesActions = createActionGroup({
   source: 'Page Categories',
@@ -10,17 +11,17 @@ export const CategoriesActions = createActionGroup({
     EnterPage: props<{ messages: IMessages }>(),
     LoadCategories: props<{ messages: IMessages }>(),
     LoadCategoriesSuccess: props<{ categories: ICategory[] }>(),
-    LoadCategoriesFailure: props<{ error: IApiError }>(),
+    LoadCategoriesFailure: props<{ error: IApiError<ApiCode, ApiMessage> }>(),
     CreateCategory: props<{ category: ICategory }>(),
     CreateCategorySuccess: props<{ category: ICategory }>(),
-    CreateCategoryFailure: props<{ error: IApiError }>(),
+    CreateCategoryFailure: props<{ error: IApiError<ApiCode, ApiMessage> }>(),
     UpdateCategory: props<{ category: ICategory }>(),
     UpdateCategorySuccess: props<{ category: Update<ICategory> }>(),
-    UpdateCategoryFailure: props<{ error: IApiError }>(),
-    DeleteCategory: props<{ id: number }>(),
-    DeleteCategorySuccess: props<{ id: number }>(),
-    DeleteCategoryFailure: props<{ error: IApiError }>(),
-    SetSelectedCategory: props<{ id: number }>(),
+    UpdateCategoryFailure: props<{ error: IApiError<ApiCode, ApiMessage> }>(),
+    DeleteCategory: props<{ id: string }>(),
+    DeleteCategorySuccess: props<{ id: string }>(),
+    DeleteCategoryFailure: props<{ error: IApiError<ApiCode, ApiMessage> }>(),
+    SetSelectedCategory: props<{ id: string }>(),
     ClearSelectedCategory: emptyProps(),
   },
 });

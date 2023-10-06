@@ -3,6 +3,7 @@ export enum ApiCode {
   FAILURE_CREATE,
   FAILURE_UPDATE,
   FAILURE_DELETE,
+  FAILURE_LOAD_CATEGORIES,
 }
 
 export enum ApiMessage {
@@ -10,4 +11,5 @@ export enum ApiMessage {
   FAILURE_CREATE = 'Error to create a new category',
   FAILURE_UPDATE = 'Error to update a category',
   FAILURE_DELETE = 'Errot to delete category',
+  FAILURE_LOAD_CATEGORIES = 'Error to load categories',
 }

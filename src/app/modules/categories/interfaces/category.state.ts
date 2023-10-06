@@ -1,10 +1,11 @@
 import { EntityState } from '@ngrx/entity';
-import { ICategory } from '../models/category.model';
-import { IApiError } from './api-error.interface';
+import { IApiError } from 'src/app/shared/interfaces/api-error.interface';
+import { ApiCode, ApiMessage } from '../enums';
+import { ICategory } from '../models';
 
-export interface CategoryState extends EntityState<ICategory> {
-  isFormLoading: Readonly<boolean>;
+export interface ICategoryState extends EntityState<ICategory> {
   isLoading: Readonly<boolean>;
-  selectedCategoryId: Readonly<number | null>;
-  error: Readonly<IApiError | null>;
+  isFormLoading: Readonly<boolean>;
+  selectedId: Readonly<string | null>;
+  error: Readonly<IApiError<ApiCode, ApiMessage> | null>;
 }
