@@ -3,20 +3,8 @@
     {
       "id": 1,
       "isActive": true,
-      "name": "Carros",
-      "description": "Carros de varios tipos vendidos"
-    },
-    {
-      "id": 2,
-      "isActive": false,
-      "name": "Gravata",
-      "description": "Teste dois"
-    },
-    {
-      "id": 3,
-      "isActive": true,
-      "name": "Car New ",
-      "description": "The new"
+      "name": "Car",
+      "description": "Teste"
     }
   ],
   "subcategories": [

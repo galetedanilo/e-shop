@@ -1,20 +1,18 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { createEntityAdapter } from '@ngrx/entity';
 import { ICategoryState } from '../interfaces';
-import { ICategory } from '../models';
-import { CategoriesActions } from './categories.actions';
+import { ICategoryModel } from '../models';
+import { categoriesActions } from './categories.actions';
 
-
-const adapter = createEntityAdapter<ICategory>();
+const adapter = createEntityAdapter<ICategoryModel>();
 
 const initialState: ICategoryState = adapter.getInitialState({
   isFormLoading: false,
   isLoading: false,
   selectedId: null,
-  error: null,
 });
 
-const initialFormState: ICategory = {
+const initialFormState: ICategoryModel = {
   id: null,
   isActive: false,
   name: '',
@@ -24,36 +22,35 @@ const initialFormState: ICategory = {
 const reducer = createReducer<ICategoryState>(
   initialState,
   on(
-    CategoriesActions.enterPage,
-    CategoriesActions.loadCategories,
+    categoriesActions.enterPage,
+    categoriesActions.loadCategories,
     (state): ICategoryState => ({
       ...state,
       isLoading: true,
     })
   ),
   on(
-    CategoriesActions.loadCategoriesSuccess,
+    categoriesActions.loadCategoriesSuccess,
     (state, action): ICategoryState => {
       return adapter.addMany(action.categories, { ...state, isLoading: false });
     }
   ),
   on(
-    CategoriesActions.loadCategoriesFailure,
-    (state, action): ICategoryState => ({
+    categoriesActions.loadCategoriesFailure,
+    (state): ICategoryState => ({
       ...state,
-      error: action.error,
       isLoading: false,
     })
   ),
   on(
-    CategoriesActions.createCategory,
+    categoriesActions.createCategory,
     (state): ICategoryState => ({
       ...state,
       isFormLoading: true,
     })
   ),
   on(
-    CategoriesActions.createCategorySuccess,
+    categoriesActions.createCategorySuccess,
     (state, action): ICategoryState => {
       return adapter.addOne(action.category, {
         ...state,
@@ -61,7 +58,7 @@ const reducer = createReducer<ICategoryState>(
       });
     }
   ),
-  on(CategoriesActions.updateCategory, (state, action): ICategoryState => {
+  on(categoriesActions.updateCategory, (state, action): ICategoryState => {
     return adapter.updateOne(
       { id: action.category.id as string, changes: action.category },
       {
@@ -71,7 +68,7 @@ const reducer = createReducer<ICategoryState>(
     );
   }),
   on(
-    CategoriesActions.updateCategorySuccess,
+    categoriesActions.updateCategorySuccess,
     (state, action): ICategoryState => {
       return adapter.updateOne(action.category, {
         ...state,
@@ -81,45 +78,36 @@ const reducer = createReducer<ICategoryState>(
     }
   ),
   on(
-    CategoriesActions.createCategoryFailure,
-    CategoriesActions.updateCategoryFailure,
-    (state, action): ICategoryState => ({
+    categoriesActions.createCategoryFailure,
+    categoriesActions.updateCategoryFailure,
+    (state): ICategoryState => ({
       ...state,
       isFormLoading: false,
       selectedId: null,
-      error: action.error,
     })
   ),
   on(
-    CategoriesActions.deleteCategorySuccess,
+    categoriesActions.deleteCategorySuccess,
     (state, action): ICategoryState => {
-      return adapter.removeOne(action.id, state);
+      return adapter.removeOne(action.id, { ...state, selectedId: null });
     }
   ),
   on(
-    CategoriesActions.deleteCategoryFailure,
-    (state, action): ICategoryState => ({
+    categoriesActions.deleteCategoryFailure,
+    (state): ICategoryState => ({
       ...state,
-      error: action.error,
     })
   ),
   on(
-    CategoriesActions.setSelectedCategory,
+    categoriesActions.setSelectedCategory,
     (state, action): ICategoryState => ({
       ...state,
       selectedId: action.id,
     })
-  ),
-  on(
-    CategoriesActions.clearSelectedCategory,
-    (state): ICategoryState => ({
-      ...state,
-      selectedId: null,
-    })
   )
 );
 
-export const CategoriesFeature = createFeature({
+export const categoriesFeature = createFeature({
   name: 'categoriesFeature',
   reducer,
   extraSelectors: ({

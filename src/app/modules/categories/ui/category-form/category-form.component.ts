@@ -22,7 +22,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ICategory } from '../../models/category.model';
+import { ICategoryModel } from '../../models/category.model';
 
 @Component({
   selector: 'app-category-form',
@@ -41,9 +41,9 @@ import { ICategory } from '../../models/category.model';
 })
 export class CategoryFormComponent implements OnInit, OnChanges {
   @Input() isLoading!: boolean;
-  @Input() formValue!: ICategory;
-  @Output() saveCategory = new EventEmitter<ICategory>();
-  @Output() clearSelected = new EventEmitter<void>();
+  @Input() category!: ICategoryModel;
+  @Output() save = new EventEmitter<ICategoryModel>();
+  @Output() deselected = new EventEmitter<void>();
 
   @ViewChild(FormGroupDirective)
   private formDir!: FormGroupDirective;
@@ -66,16 +66,16 @@ export class CategoryFormComponent implements OnInit, OnChanges {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ngOnChanges(_changes: SimpleChanges): void {
-    this.form.setValue(this.formValue);
+    this.form.setValue(this.category);
   }
 
   onSubmit() {
-    this.saveCategory.emit(this.form.getRawValue() as ICategory);
+    this.save.emit(this.form.getRawValue() as ICategoryModel);
     this.formDir.resetForm(this.#initialFormValue);
   }
 
   onCancel() {
-    this.clearSelected.emit();
+    this.deselected.emit();
     this.formDir.resetForm(this.#initialFormValue);
   }
 }

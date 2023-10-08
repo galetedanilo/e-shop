@@ -1,27 +1,23 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { ICategory } from '../models/category.model';
-import { IApiError } from '../../../shared/interfaces/api-error.interface';
+import { ICategoryModel } from '../models/category.model';
 import { Update } from '@ngrx/entity';
-import { IMessages } from 'src/app/shared/interfaces/messages.interface';
-import { ApiCode, ApiMessage } from '../enums/api-error.enum';
 
-export const CategoriesActions = createActionGroup({
+export const categoriesActions = createActionGroup({
   source: 'Page Categories',
   events: {
-    EnterPage: props<{ messages: IMessages }>(),
-    LoadCategories: props<{ messages: IMessages }>(),
-    LoadCategoriesSuccess: props<{ categories: ICategory[] }>(),
-    LoadCategoriesFailure: props<{ error: IApiError<ApiCode, ApiMessage> }>(),
-    CreateCategory: props<{ category: ICategory }>(),
-    CreateCategorySuccess: props<{ category: ICategory }>(),
-    CreateCategoryFailure: props<{ error: IApiError<ApiCode, ApiMessage> }>(),
-    UpdateCategory: props<{ category: ICategory }>(),
-    UpdateCategorySuccess: props<{ category: Update<ICategory> }>(),
-    UpdateCategoryFailure: props<{ error: IApiError<ApiCode, ApiMessage> }>(),
+    EnterPage: emptyProps(),
+    LoadCategories: emptyProps(),
+    LoadCategoriesSuccess: props<{ categories: ICategoryModel[] }>(),
+    LoadCategoriesFailure: emptyProps(),
+    CreateCategory: props<{ category: ICategoryModel }>(),
+    CreateCategorySuccess: props<{ category: ICategoryModel }>(),
+    CreateCategoryFailure: emptyProps(),
+    UpdateCategory: props<{ category: ICategoryModel }>(),
+    UpdateCategorySuccess: props<{ category: Update<ICategoryModel> }>(),
+    UpdateCategoryFailure: emptyProps(),
     DeleteCategory: props<{ id: string }>(),
     DeleteCategorySuccess: props<{ id: string }>(),
-    DeleteCategoryFailure: props<{ error: IApiError<ApiCode, ApiMessage> }>(),
+    DeleteCategoryFailure: emptyProps(),
     SetSelectedCategory: props<{ id: string }>(),
-    ClearSelectedCategory: emptyProps(),
   },
 });

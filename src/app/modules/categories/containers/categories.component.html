@@ -1,0 +1,16 @@
+<p-toast></p-toast>
+
+<div class="flex gap-4">
+  <app-category-form
+    class="w-3"
+    (save)="facade.save($event)"
+    (deselected)="facade.selected('')"
+    [isLoading]="facade.formLoading()"
+    [category]="facade.category()" />
+  <app-category-table
+    class="w-9"
+    (selected)="facade.selected($event)"
+    (delete)="facade.delete($event)"
+    [categories]="facade.categories()"
+    [isLoading]="facade.loading()" />
+</div>

@@ -6,7 +6,7 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 
-import { ICategory } from '../../models/category.model';
+import { ICategoryModel } from '../../models/category.model';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
@@ -23,10 +23,10 @@ import { ConfirmationService } from 'primeng/api';
   styleUrls: ['./category-table.component.css'],
 })
 export class CategoryTableComponent {
-  @Input() categories!: ICategory[];
+  @Input() categories!: ICategoryModel[];
   @Input() isLoading!: boolean;
-  @Output() editCategory = new EventEmitter<string>();
-  @Output() deleteCategory = new EventEmitter<string>();
+  @Output() selected = new EventEmitter<string>();
+  @Output() delete = new EventEmitter<string>();
 
   #service = inject(ConfirmationService);
 
@@ -36,7 +36,7 @@ export class CategoryTableComponent {
       message: $localize`Are you sure that you want to proceed?`,
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.deleteCategory.emit(id);
+        this.delete.emit(id);
       },
     });
   }

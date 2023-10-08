@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { CategoriesActions } from './categories.actions';
+import { categoriesActions } from './categories.actions';
 import {
   catchError,
   concatMap,
@@ -10,74 +10,58 @@ import {
   of,
   tap,
 } from 'rxjs';
-import { ApiCode, ApiMessage } from '../enums/api-error.enum';
-import { MessageService } from 'primeng/api';
-import { ICategoriesService } from '../services/categories.service.interface';
+import { EApiMessage } from '../enums/api-error.enum';
+import { ACategoriesService } from '../services/categories.service.interface';
+import { AAppMessageClass } from 'src/app/shared/classes/app-message.class';
 
 @Injectable()
-export class CategoriesEffect {
-  #service = inject(ICategoriesService);
+export class CategoriesEffect extends AAppMessageClass {
+  #service = inject(ACategoriesService);
   #actions = inject(Actions);
-  #messageService = inject(MessageService);
 
   loadCategories$ = createEffect(() => {
     return this.#actions.pipe(
-      ofType(CategoriesActions.enterPage, CategoriesActions.loadCategories),
-      exhaustMap(({ messages }) =>
+      ofType(categoriesActions.enterPage, categoriesActions.loadCategories),
+      exhaustMap(() =>
         this.#service.getAll().pipe(
           tap({
             next: () =>
-              this.#handleMessage('success', 'Success', messages.success),
+              this.handleMessage(
+                'success',
+                'Success',
+                EApiMessage.SUCCESS_LOAD
+              ),
             error: () =>
-              this.#handleMessage('error', 'Error', messages.failure),
+              this.handleMessage('error', 'Error', EApiMessage.FAILURE_LOAD),
           }),
           map(categories =>
-            CategoriesActions.loadCategoriesSuccess({ categories })
+            categoriesActions.loadCategoriesSuccess({ categories })
           ),
-          catchError(() =>
-            of(
-              CategoriesActions.loadCategoriesFailure({
-                error: {
-                  code: ApiCode.FAILURE_LOAD,
-                  message: ApiMessage.FAILURE_LOAD,
-                },
-              })
-            )
-          )
+          catchError(() => of(categoriesActions.loadCategoriesFailure()))
         )
       )
     );
   });
 
-  saveCategory$ = createEffect(() => {
+  createCategory$ = createEffect(() => {
     return this.#actions.pipe(
-      ofType(CategoriesActions.createCategory),
+      ofType(categoriesActions.createCategory),
       concatMap(props =>
         this.#service.create(props.category).pipe(
-          map(category => {
-            this.#handleMessage(
-              'success',
-              'Success',
-              'New category registered successfully'
-            );
-            return CategoriesActions.createCategorySuccess({ category });
+          tap({
+            next: () =>
+              this.handleMessage(
+                'success',
+                'Success',
+                EApiMessage.SUCCESS_CREATE
+              ),
+            error: () =>
+              this.handleMessage('error', 'Error', EApiMessage.FAILURE_CREATE),
           }),
-          catchError(() => {
-            this.#handleMessage(
-              'error',
-              'Error',
-              'Error to resgister new category'
-            );
-
-            return of(
-              CategoriesActions.createCategoryFailure({
-                error: {
-                  code: ApiCode.FAILURE_CREATE,
-                  message: ApiMessage.FAILURE_UPDATE,
-                },
-              })
-            );
-          })
+          map(category =>
+            categoriesActions.createCategorySuccess({ category })
+          ),
+          catchError(() => of(categoriesActions.createCategoryFailure()))
         )
       )
     );
@@ -85,31 +69,25 @@ export class CategoriesEffect {
 
   updateCategory$ = createEffect(() => {
     return this.#actions.pipe(
-      ofType(CategoriesActions.updateCategory),
+      ofType(categoriesActions.updateCategory),
       concatMap(props =>
         this.#service.update(props.category).pipe(
-          map(category => {
-            this.#handleMessage(
-              'success',
-              'Success',
-              'Update category successfully'
-            );
-            return CategoriesActions.updateCategorySuccess({
-              category: { id: category.id as string, changes: category },
-            });
+          tap({
+            next: () =>
+              this.handleMessage(
+                'success',
+                'Success',
+                EApiMessage.SUCCESS_UPDATE
+              ),
+            error: () =>
+              this.handleMessage('error', 'Error', EApiMessage.FAILURE_UPDATE),
           }),
-          catchError(() => {
-            this.#handleMessage('error', 'Error', 'Error to update category');
-
-            return of(
-              CategoriesActions.updateCategoryFailure({
-                error: {
-                  code: ApiCode.FAILURE_UPDATE,
-                  message: ApiMessage.FAILURE_UPDATE,
-                },
-              })
-            );
-          })
+          map(category =>
+            categoriesActions.updateCategorySuccess({
+              category: { id: category.id as string, changes: category },
+            })
+          ),
+          catchError(() => of(categoriesActions.updateCategoryFailure()))
         )
       )
     );
@@ -117,43 +95,23 @@ export class CategoriesEffect {
 
   deleteCategory$ = createEffect(() => {
     return this.#actions.pipe(
-      ofType(CategoriesActions.deleteCategory),
+      ofType(categoriesActions.deleteCategory),
       mergeMap(props =>
         this.#service.delete(props.id).pipe(
-          map(() => {
-            this.#handleMessage(
-              'success',
-              'Success',
-              'Delete category successfully'
-            );
-            return CategoriesActions.deleteCategorySuccess({ id: props.id });
-          })
+          tap({
+            next: () =>
+              this.handleMessage(
+                'success',
+                'Success',
+                EApiMessage.SUCCESS_DELETE
+              ),
+            error: () =>
+              this.handleMessage('error', 'Error', EApiMessage.FAILURE_DELETE),
+          }),
+          map(() => categoriesActions.deleteCategorySuccess({ id: props.id })),
+          catchError(() => of(categoriesActions.deleteCategoryFailure()))
         )
-      ),
-      catchError(() => {
-        this.#handleMessage('error', 'Error', 'Error to delete category');
-
-        return of(
-          CategoriesActions.deleteCategoryFailure({
-            error: {
-              code: ApiCode.FAILURE_DELETE,
-              message: ApiMessage.FAILURE_DELETE,
-            },
-          })
-        );
-      })
+      )
     );
   });
-
-  #handleMessage(
-    severity: 'success' | 'error',
-    summary: string,
-    detail: string
-  ) {
-    this.#messageService.add({
-      severity,
-      summary,
-      detail,
-    });
-  }
 }

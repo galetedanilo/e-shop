@@ -1,10 +1,12 @@
 import { Observable } from 'rxjs';
-import { ICategory } from '../models/category.model';
+import { ICategoryModel } from '../models/category.model';
 
-export abstract class ICategoriesService {
-  abstract create(category: ICategory): Observable<ICategory>;
-  abstract update(category: Partial<ICategory>): Observable<ICategory>;
+export abstract class ACategoriesService {
+  abstract create(category: ICategoryModel): Observable<ICategoryModel>;
+  abstract update(
+    category: Partial<ICategoryModel>
+  ): Observable<ICategoryModel>;
   abstract delete(id: string | number): Observable<void>;
-  abstract getById(id: string | number): Observable<ICategory>;
-  abstract getAll(): Observable<ICategory[]>;
+  abstract getById(id: string | number): Observable<ICategoryModel>;
+  abstract getAll(): Observable<ICategoryModel[]>;
 }
